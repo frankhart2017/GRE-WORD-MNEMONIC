@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Practice</title>
+
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+
+  </head>
+  <body>
+    <p id="word">{{word}}</p>
+    <p id="meaning"></p>
+    <p id="mnemonic"></p>
+
+    <form method="post">
+      <button type="button" id="check">Check answer</button>
+      <button type="button" id="correct">Correct</button>
+      <button type="button" id="wrong">Wrong</button>
+    </form>
+
+    <script>
+
+      $("#check").click(function() {
+          word = $("#word").html();
+
+          $.ajax({
+            url: "/practice",
+            type: "post",
+            dataType: "json",
+            data: {word: word, choice: "1"},
+            success: function(result) {
+              $("#meaning").html("<strong>Meaning: </strong>" + result.meaning);
+              $("#mnemonic").html("<strong>Mnemonic: </strong>" + result.mnemonic);
+            }
+          });
+      });
+
+      $("#correct").click(function() {
+        word = $("#word").html();
+
+        $.ajax({
+          url: "/practice",
+          type: "post",
+          dataType: "json",
+          data: {word: word, choice: "2"},
+          success: function(result) {
+            if(result.word == "-1") {
+              location.href = "/";
+            }
+            $("#word").html(result.word);
+          }
+        });
+      });
+
+      $("#wrong").click(function() {
+        word = $("#word").html();
+
+        $.ajax({
+          url: "/practice",
+          type: "post",
+          dataType: "json",
+          data: {word: word, choice: "3"},
+          success: function(result) {
+            $("#word").html(result.word);
+          }
+        });
+      });
+
+    </script>
+
+  </body>
+</html>

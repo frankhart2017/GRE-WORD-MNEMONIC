@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Add New Words</title>
+  </head>
+  <body>
+    <form method="post" action="/add">
+      <p><input type="text" name="word" placeholder="Enter word"></p>
+      <p><textarea name="meaning" placeholder="Enter meaning" style="width: 25%; height: 100px;"></textarea></p>
+      <p><textarea name="mnemonic" placeholder="Enter meaning" style="width: 25%; height: 100px;"></textarea></p>
+      <p><input type="submit" name="addWord"></p>
+    </form>
+
+    {% with messages = get_flashed_messages() %}
+	  {% if messages %}
+	    {% for message in messages %}
+        <script>
+			   alert("{{message}}");
+        </script>
+		  {% endfor %}
+	  {% endif %}
+	  {% endwith %}
+  </body>
+</html>
