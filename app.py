@@ -19,6 +19,8 @@ for c in cursor:
 
 conn.close()
 
+orig_len = len(words)
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
 
@@ -65,16 +67,19 @@ def practice():
 
             else:
                 word = random.choice(list(words.keys()))
-                return jsonify({'word': word})
+                done = str(orig_len - len(words)) + "/" + str(orig_len)
+                return jsonify({'word': word, 'done': done})
 
         elif choice == "3":
             words_new = {key:value for key, value in words.items() if key != word}
             word = random.choice(list(words_new.keys()))
-            return jsonify({'word': word})
+            done = str(orig_len - len(words)) + "/" + str(orig_len)
+            return jsonify({'word': word, 'done': done})
 
     word = random.choice(list(words.keys()))
+    done = str(orig_len - len(words)) + "/" + str(orig_len)
 
-    return render_template('practice.html', word=word)
+    return render_template('practice.html', word=word, done=done)
 
 @app.route('/add', methods=['GET', 'POST'])
 def add():

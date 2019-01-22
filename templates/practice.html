@@ -12,6 +12,7 @@
   </head>
   <body>
     <p id="word">{{word}}</p>
+    <p id="done">{{done}}</p>
     <p id="meaning"></p>
     <p id="mnemonic"></p>
 
@@ -48,9 +49,13 @@
           data: {word: word, choice: "2"},
           success: function(result) {
             if(result.word == "-1") {
+              alert("Congratulations!")
               location.href = "/";
             }
             $("#word").html(result.word);
+            $("#done").html(result.done);
+            $("#meaning").html("");
+            $("#mnemonic").html("");
           }
         });
       });
@@ -65,6 +70,8 @@
           data: {word: word, choice: "3"},
           success: function(result) {
             $("#word").html(result.word);
+            $("#meaning").html("");
+            $("#mnemonic").html("");
           }
         });
       });
